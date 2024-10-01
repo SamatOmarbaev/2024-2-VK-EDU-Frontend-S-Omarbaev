@@ -15,30 +15,34 @@
     <title>Send a message</title>
   <link href="style.css" rel="stylesheet"></head>
   <body>
-    <div class="root">
-      <header class="header">
-        <span class="material-symbols-outlined icon-flex">arrow_back</span>
-        <div class="avatar">
-          <div class="avatar-photo">
-            <img src="../src/assets/avatar-svgrepo-com.svg" alt="">
-          </div>
-          <div class="avatar-info">
-            <span class="avatar-info_name">Дженнифер</span>
-            <span class="avatar-info_was-online">была 2 часа назад</span>
-          </div>
+    <header class="header">
+      <span class="material-symbols-outlined">arrow_back</span>
+      <div class="header-avatar">
+        <div class="header-avatar_photo">
+          <img src="../src/assets/avatar-svgrepo-com.svg" alt="avatar photo" />
         </div>
-        <span class="material-symbols-outlined icon-flex">search</span>
+        <div class="header-avatar_info">
+          <span class="header-avatar_info-title">Дженнифер</span>
+          <span class="header-avatar_info-subtitle">была 2 часа назад</span>
+        </div>
+      </div>
+      <div class="header-search_more">
+        <span class="material-symbols-outlined">search</span>
         <span class="material-symbols-outlined">more_vert</span>
-      </header>
-      <main class="chat">
-        <div class="messages" id="messages"></div>
-        <div class="message-form">
-          <input type="text" id="message-input" placeholder="Сообщение" />
-          <span class="material-symbols-outlined attach">attachment</span>
-          <button id="send-button" class="material-icons">send</button>
-        </div>
-      </main>
-    </div>
+      </div>
+    </header>
+    <main class="chat">
+      <ul class="messages" id="messages"></ul>
+    </main>
+    <footer class="footer">
+      <form class="message-form">
+        <input type="text" id="message-input" placeholder="Сообщение" />
+        <span class="material-symbols-outlined attach">attachment</span>
+        <button id="send-button" class="material-icons" type="button">
+          send
+        </button>
+      </form>
+    </footer>
     <script src="script.js"></script>
   <script type="text/javascript" src="bundle.js"></script></body>
 </html>
