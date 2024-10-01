@@ -1,71 +1,62 @@
 import './index.css';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const messagesDiv = document.getElementById('messages');
-    const messageInput = document.getElementById('message-input');
-    const sendButton = document.getElementById('send-button');
-    const username = "Вы";
+const USER_NAME = "Вы";
+
+const getMessages = () => JSON.parse(localStorage.getItem('messages')) || [];
+
+const createMessages = () => {
+    const messagesList = document.getElementById('messages');
     const doneCheck = `<span class="material-symbols-outlined">done_all</span>`;
 
-    function displayMessages() {
-        messagesDiv.innerHTML = '';
-        const messages = JSON.parse(localStorage.getItem('messages')) || [];
-        messages.forEach(msg => {
-            const messageElement = document.createElement('div');
-            const messageElementText = document.createElement('p');
-            const messageElementTime = document.createElement('span');
-            messageElement.classList.add('message');
-            messageElementTime.classList.add('time');
-            messageElement.classList.add(msg.name === username ? 'user' : 'other');
-            messageElementText.textContent = `${msg.text}`;
-            messageElementTime.textContent = `${msg.time}`;
-            if (msg.name === username) {
-                messageElementTime.innerHTML += ` ${doneCheck}`;
-            }
-            messageElement.appendChild(messageElementText)
-            messageElement.appendChild(messageElementTime)
-            messagesDiv.appendChild(messageElement);
-        });
+    messagesList.innerHTML = '';
+    const messages = getMessages();
 
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    }
+    messages.forEach(msg => {
+        const msClass = msg.name === USER_NAME ? 'user' : 'other';
+        const doneIcon = msg.name === USER_NAME ? doneCheck : '';
 
-    function saveMessage(text) {
-        const messages = JSON.parse(localStorage.getItem('messages')) || [];
-        const newMessage = {
-            name: username,
-            text: text,
-            time: new Date().toLocaleTimeString(["ru-RU"], { hour: '2-digit', minute: '2-digit' })
-        };
-        messages.push(newMessage);
-        localStorage.setItem('messages', JSON.stringify(messages));
-    }
-
-    sendButton.addEventListener('click', () => {
-        if (messageInput.value) {
-            saveMessage(messageInput.value);
-            displayMessages();
-            messageInput.value = '';
-            sendButton.style.display = 'none'
-        }
+        messagesList.innerHTML += `
+            <li class="message ${msClass}">
+                <p>${msg.text}</p>
+                <span class="time">${msg.time} ${doneIcon}</span>
+            </li>
+        `;
     });
 
-    messageInput.addEventListener('input', () => {
-        if (messageInput.value) {
-            sendButton.style.display = 'block';
-        } else {
-            sendButton.style.display = 'none';
-        }
-    });
+    messagesList.scrollTop = messagesList.scrollHeight;
+}
+
+const saveMessage = (text) => {
+    const messages = getMessages();
+    const newMessage = {
+        name: USER_NAME,
+        text: text,
+        time: new Date().toLocaleTimeString(["ru-RU"], { hour: '2-digit', minute: '2-digit' })
+    };
+    messages.push(newMessage);
+    localStorage.setItem('messages', JSON.stringify(messages));
+}
+
+const sendMessage = () => {
+    const messageInput = document.getElementById('message-input');
+    if (!messageInput.value) return;
+    saveMessage(messageInput.value);
+    createMessages();
+    messageInput.value = '';
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+
+    sendButton.addEventListener('click', sendMessage);
 
     messageInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && messageInput.value) {
-            saveMessage(messageInput.value);
-            displayMessages();
-            messageInput.value = '';
+        if (e.key === 'Enter') {
             e.preventDefault();
+            sendMessage();
         }
     });
 
-    displayMessages();
+    createMessages();
 });
