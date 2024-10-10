@@ -1,10 +1,8 @@
 'use strict';
 
 const path = require('path');
-
-const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
-const webpack = require('webpack');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 const SRC_PATH = path.resolve(__dirname, 'src');
 const BUILD_PATH = path.resolve(__dirname, 'build');
@@ -13,10 +11,11 @@ module.exports = {
     context: SRC_PATH,
     entry: {
         index: './index.js',
+        chat: './chat/chat.js'
     },
     output: {
         path: BUILD_PATH,
-        filename: 'bundle.js'
+        filename: '[name].bundle.js'
     },
     module: {
         strictExportPresence: true,
@@ -34,23 +33,28 @@ module.exports = {
                 ],
             },
             {
-                test: /shadow\.css$/,
+                test: /\.(png|jpg|gif)$/i,
                 include: SRC_PATH,
                 use: [
                     {
-                        loader: 'css-loader'
+                        loader: 'file-loader',
                     },
                 ],
             },
             {
-                test: /index\.css$/,
-                include: SRC_PATH,
-                use: [
+                test: /\.css$/i,
+                oneOf: [
                     {
-                        loader: MiniCSSExtractPlugin.loader,
+                        test: /index\.css$/,
+                        include: SRC_PATH,
+                        use: [
+                            MiniCSSExtractPlugin.loader,
+                            'css-loader',
+                        ],
                     },
                     {
-                        loader: 'css-loader',
+                        include: SRC_PATH,
+                        use: ['style-loader', 'css-loader'],
                     },
                 ],
             },
@@ -58,11 +62,23 @@ module.exports = {
     },
     plugins: [
         new MiniCSSExtractPlugin({
-            filename: 'style.css',
+            filename: '[name].css',
         }),
         new HTMLWebpackPlugin({
             filename: 'index.html',
-            template: './index.html'
-        })
-    ]
+            template: './index.html',
+            chunks: ['index']
+        }),
+        new HTMLWebpackPlugin({
+            filename: 'chat.html',
+            template: './chat/chat.html',
+            chunks: ['chat'],
+        }),
+    ],
+    devServer: {
+        contentBase: path.join(__dirname),
+        watchContentBase: true,
+        open: true,
+    },
+    devtool: 'source-map',
 };
