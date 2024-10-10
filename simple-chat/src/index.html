@@ -1,48 +1,27 @@
 <!DOCTYPE html>
-<html>
-  <head lang="en">
+<html lang="en">
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
+    <title>Список чатов</title>
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
     />
-    <link rel="stylesheet" href="index.css" />
-    <title>Send a message</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script type="module" src="index.js"></script>
   </head>
   <body>
     <header class="header">
-      <span class="material-symbols-outlined">arrow_back</span>
-      <div class="header-avatar">
-        <div class="header-avatar_photo">
-          <img src="../src/assets/avatar-svgrepo-com.svg" alt="avatar photo" />
-        </div>
-        <div class="header-avatar_info">
-          <span class="header-avatar_info-title">Дженнифер</span>
-          <span class="header-avatar_info-subtitle">была 2 часа назад</span>
-        </div>
-      </div>
-      <div class="header-search_more">
-        <span class="material-symbols-outlined">search</span>
-        <span class="material-symbols-outlined">more_vert</span>
-      </div>
+      <span class="material-symbols-outlined size">menu</span>
+      <h2>Список чатов</h2>
+      <span class="material-symbols-outlined size">search</span>
     </header>
-    <main class="chat">
-      <ul class="messages" id="messages"></ul>
+    <main>
+      <ul id="chat-list"></ul>
     </main>
-    <footer class="footer">
-      <form class="message-form">
-        <input type="text" id="message-input" placeholder="Сообщение" />
-        <span class="material-symbols-outlined attach">attachment</span>
-        <button id="send-button" class="material-icons" type="button">
-          send
-        </button>
-      </form>
-    </footer>
-    <script src="script.js"></script>
+    <button class="create-chat-button">
+      <span class="material-symbols-outlined size">edit</span>
+    </button>
   </body>
 </html>
