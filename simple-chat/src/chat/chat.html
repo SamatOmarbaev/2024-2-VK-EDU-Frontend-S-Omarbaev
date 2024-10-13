@@ -2,7 +2,10 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Чат</title>
     <link
       rel="stylesheet"
@@ -19,7 +22,13 @@
     <footer class="footer">
       <form class="message-form" action="/">
         <input type="text" id="message-input" placeholder="Сообщение" />
-        <button class="material-symbols-outlined" type="button">send</button>
+        <button
+          id="send-button"
+          class="material-symbols-outlined"
+          type="button"
+        >
+          send
+        </button>
       </form>
     </footer>
     <script type="module" src="chat.js"></script>

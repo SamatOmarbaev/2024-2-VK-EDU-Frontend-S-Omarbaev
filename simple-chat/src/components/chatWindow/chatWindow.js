@@ -1,28 +1,39 @@
 import './chatWindow.css'
 import { createMessageObject, saveMessage, markReceivedMessagesAsRead, loadPeople } from '../../utils/storage.js';
 
+const messageInput = document.getElementById('message-input');
+
+const sendMessage = (chatId, messagesList) => {
+    const messageText = messageInput.value.trim();
+
+    if (messageText) {
+        const message = createMessageObject(messageText, 'sent');
+        saveMessage(chatId, message);
+        addMessageToUI(message, messagesList);
+        messageInput.value = '';
+    }
+};
+
 export function initializeChatWindow() {
     const urlParams = new URLSearchParams(window.location.search);
     const chatId = urlParams.get('id');
 
     const form = document.querySelector('.message-form');
-    const input = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
     const messagesList = document.querySelector('.messages-list');
 
     fillHeader(chatId);
 
     document.addEventListener('DOMContentLoaded', () => loadMessages(chatId, messagesList));
 
+    sendButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        sendMessage(chatId, messagesList);
+    });
+
     form.addEventListener('submit', (event) => {
         event.preventDefault();
-        const messageText = input.value.trim();
-
-        if (messageText) {
-            const message = createMessageObject(messageText, 'sent');
-            saveMessage(chatId, message);
-            addMessageToUI(message, messagesList);
-            input.value = '';
-        }
+        sendMessage(chatId, messagesList);
     });
 
     setTimeout(() => {
@@ -81,6 +92,11 @@ function loadMessages(chatId, messagesList) {
 function addMessageToUI(message, messagesList) {
     const messageItem = document.createElement('li');
     messageItem.classList.add('message-item', message.direction);
+
+    messageItem.style.opacity = '0';
+    setTimeout(() => {
+        messageItem.style.opacity = '1';
+    }, 10);
 
     const timeSpan = document.createElement('span');
     timeSpan.classList.add('time');
