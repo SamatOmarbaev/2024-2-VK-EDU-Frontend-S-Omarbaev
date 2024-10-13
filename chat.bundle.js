@@ -97,7 +97,7 @@
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".chat-container {\n    display: flex;\n    flex-direction: column;\n    height: calc(100vh - 120px);\n    justify-content: flex-end;\n}\n\n.messages-container {\n    flex-grow: 1;\n    padding: 20px;\n    overflow-y: auto;\n    background: #eaeaea;\n    position: relative;\n}\n\n/* message list */\n.messages-list {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    display: flex;\n    flex-direction: column;\n}\n\n/* message */\n.message-item {\n    background-color: #f1f1d6;\n    max-width: 60%;\n    margin-bottom: 10px;\n    padding: 10px 40px 10px 15px;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);\n    position: relative;\n    word-wrap: break-word;\n    align-self: flex-start;\n    border-radius: 10px;\n    min-width: 60px;\n}\n\n.message-item.sent {\n    align-self: flex-end;\n    background-color: #dcf8c6;\n}\n\n.message-item.received {\n    align-self: flex-start;\n    background-color: #fff;\n}\n\n.message-item .time {\n    font-size: 10px;\n    color: #999;\n    position: absolute;\n    bottom: 5px;\n    right: 10px;\n}\n\n.message-item .material-symbols-outlined {\n    font-size: 16px;\n    vertical-align: middle;\n    margin-left: 5px;\n}\n\n/* header */\n.header-avatar {\n    display: flex;\n    align-items: center;\n    gap: 1rem;\n}\n\n.header-avatar_photo {\n    border-radius: 50%;\n    height: 40px;\n    width: 40px;\n    min-width: 40px;\n    display: flex;\n}\n\n.header-avatar_title {\n    font-size: 22px;\n    font-weight: 500;\n}\n\n.header-search_more {\n    display: flex;\n    align-items: center;\n    gap: 2rem;\n}\n\n/* footer */\n.footer {\n    position: fixed;\n    width: 100%;\n    bottom: 0;\n    height: 60px;\n}\n\n.message-form {\n    display: flex;\n    align-items: center;\n    gap: 16px;\n    padding: 10px;\n    background-color: #fff;\n    border-top: 1px solid #d8d8d8;\n}\n\n#message-input {\n    width: 100%;\n    border: none;\n    padding: 10px;\n    font-size: 18px;\n\n    &:focus {\n        outline: none;\n    }\n}\n", ""]);
+exports.push([module.i, ".chat-container {\n    display: flex;\n    flex-direction: column;\n    height: calc(100vh - 120px);\n    justify-content: flex-end;\n}\n\n.messages-container {\n    flex-grow: 1;\n    padding: 20px;\n    overflow-y: auto;\n    background: #eaeaea;\n    position: relative;\n}\n\n/* message list */\n.messages-list {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    display: flex;\n    flex-direction: column;\n}\n\n/* message */\n.message-item {\n    background-color: #f1f1d6;\n    max-width: 60%;\n    margin-bottom: 10px;\n    padding: 10px 40px 10px 15px;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);\n    position: relative;\n    word-wrap: break-word;\n    align-self: flex-start;\n    border-radius: 10px;\n    min-width: 60px;\n    transition: opacity 0.3s ease-in-out;\n}\n\n.message-item.sent {\n    align-self: flex-end;\n    background-color: #dcf8c6;\n}\n\n.message-item.received {\n    align-self: flex-start;\n    background-color: #fff;\n}\n\n.message-item .time {\n    font-size: 10px;\n    color: #999;\n    position: absolute;\n    bottom: 5px;\n    right: 10px;\n}\n\n.message-item .material-symbols-outlined {\n    font-size: 16px;\n    vertical-align: middle;\n    margin-left: 5px;\n}\n\n/* header */\n.header-avatar {\n    display: flex;\n    align-items: center;\n    gap: 1rem;\n}\n\n.header-avatar_photo {\n    border-radius: 50%;\n    height: 40px;\n    width: 40px;\n    min-width: 40px;\n    display: flex;\n}\n\n.header-avatar_title {\n    font-size: 22px;\n    font-weight: 500;\n}\n\n.header-search_more {\n    display: flex;\n    align-items: center;\n    gap: 2rem;\n}\n\n/* footer */\n.footer {\n    position: fixed;\n    width: 100%;\n    bottom: 0;\n    height: 60px;\n}\n\n.message-form {\n    display: flex;\n    align-items: center;\n    gap: 16px;\n    padding: 10px;\n    background-color: #fff;\n    border-top: 1px solid #d8d8d8;\n}\n\n#message-input {\n    width: 100%;\n    border: none;\n    padding: 10px;\n    font-size: 18px;\n\n    &:focus {\n        outline: none;\n    }\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -551,25 +551,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_storage_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/storage.js */ "./utils/storage.js");
 
 
+var messageInput = document.getElementById('message-input');
+var sendMessage = function sendMessage(chatId, messagesList) {
+  var messageText = messageInput.value.trim();
+  if (messageText) {
+    var message = Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["createMessageObject"])(messageText, 'sent');
+    Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["saveMessage"])(chatId, message);
+    addMessageToUI(message, messagesList);
+    messageInput.value = '';
+  }
+};
 function initializeChatWindow() {
   var urlParams = new URLSearchParams(window.location.search);
   var chatId = urlParams.get('id');
   var form = document.querySelector('.message-form');
-  var input = document.getElementById('message-input');
+  var sendButton = document.getElementById('send-button');
   var messagesList = document.querySelector('.messages-list');
   fillHeader(chatId);
   document.addEventListener('DOMContentLoaded', function () {
     return loadMessages(chatId, messagesList);
   });
+  sendButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    sendMessage(chatId, messagesList);
+  });
   form.addEventListener('submit', function (event) {
     event.preventDefault();
-    var messageText = input.value.trim();
-    if (messageText) {
-      var message = Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["createMessageObject"])(messageText, 'sent');
-      Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["saveMessage"])(chatId, message);
-      addMessageToUI(message, messagesList);
-      input.value = '';
-    }
+    sendMessage(chatId, messagesList);
   });
   setTimeout(function () {
     simulateReceivedMessage(chatId, 'Привет) как дела?', messagesList);
@@ -612,6 +620,10 @@ function loadMessages(chatId, messagesList) {
 function addMessageToUI(message, messagesList) {
   var messageItem = document.createElement('li');
   messageItem.classList.add('message-item', message.direction);
+  messageItem.style.opacity = '0';
+  setTimeout(function () {
+    messageItem.style.opacity = '1';
+  }, 10);
   var timeSpan = document.createElement('span');
   timeSpan.classList.add('time');
   timeSpan.textContent = new Date(message.timestamp).toLocaleTimeString([], {
