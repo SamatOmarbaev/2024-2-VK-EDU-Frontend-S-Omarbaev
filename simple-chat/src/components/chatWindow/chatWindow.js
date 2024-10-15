@@ -1,7 +1,7 @@
 import './chatWindow.css'
-import { createMessageObject, saveMessage, markReceivedMessagesAsRead, loadPeople } from '../../utils/storage.js';
+import { createMessageObject, saveMessage, markReceivedMessagesAsRead, loadPeople, getChatData } from '../../utils/storage.js';
 
-export function initializeChatWindow() {
+export const initializeChatWindow = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const chatId = urlParams.get('id');
 
@@ -17,26 +17,34 @@ export function initializeChatWindow() {
         event.preventDefault();
         const messageText = input.value.trim();
 
-        if (messageText) {
-            const message = createMessageObject(messageText, 'sent');
-            saveMessage(chatId, message);
-            addMessageToUI(message, messagesList);
-            input.value = '';
-        }
+        if (!messageText) return;
+
+        const message = createMessageObject(messageText, 'sent');
+        saveMessage(chatId, message);
+        addMessageToUI(message, messagesList);
+        input.value = '';
     });
 
+    let simulatedReceivedMessageSent = false;
+
     setTimeout(() => {
-        simulateReceivedMessage(chatId, 'Привет) как дела?', messagesList);
+        if (!simulatedReceivedMessageSent) {
+            simulateReceivedMessage(chatId, 'Привет) как дела?', messagesList);
+            simulatedReceivedMessageSent = true;
+        }
     }, 5000);
 }
 
-function fillHeader(chatId) {
+const fillHeader = (chatId) => {
     const header = document.querySelector('.header');
     const people = loadPeople();
     const person = people.find(p => p.id === chatId);
 
-    if (person) {
-        header.innerHTML = `
+    if (!person) {
+        console.error('Пользователь не найден:', chatId);
+        return;
+    }
+    header.innerHTML = `
             <button id="back-btn" class="material-symbols-outlined">arrow_back_ios</button>
             <div class="header-avatar">
                 <div class="header-avatar_photo">
@@ -50,35 +58,24 @@ function fillHeader(chatId) {
             </div>
         `;
 
-        const backButton = document.getElementById('back-btn');
-        backButton.onclick = () => window.history.back()
-    } else {
-        console.error('Пользователь не найден:', chatId);
-    }
+    const backButton = document.getElementById('back-btn');
+    backButton.onclick = () => window.history.back()
 }
 
-function getMessageId(chatId, id) {
-    return `${chatId}.message_${id}`;
-}
+const loadMessages = (chatId, messagesList) => {
+    const chats = getChatData();
+    const chat = chats[chatId];
 
-function loadMessages(chatId, messagesList) {
-    let lastMessageId = 0;
-    if (localStorage.getItem(`${chatId}.lastMessageId`) !== null) {
-        lastMessageId = parseInt(localStorage.getItem(`${chatId}.lastMessageId`));
-    }
-    for (let i = 1; i <= lastMessageId; i++) {
-        const messageKey = getMessageId(chatId, i);
-        const messageData = localStorage.getItem(messageKey);
-        if (messageData) {
-            const message = JSON.parse(messageData);
+    if (chat && chat.messages) {
+        chat.messages.forEach(message => {
             addMessageToUI(message, messagesList);
-        }
+        });
     }
 
     markReceivedMessagesAsRead(chatId);
 }
 
-function addMessageToUI(message, messagesList) {
+const addMessageToUI = (message, messagesList) => {
     const messageItem = document.createElement('li');
     messageItem.classList.add('message-item', message.direction);
 
@@ -104,7 +101,7 @@ function addMessageToUI(message, messagesList) {
     messagesList.appendChild(messageItem);
 }
 
-function simulateReceivedMessage(chatId, text, messagesList) {
+const simulateReceivedMessage = (chatId, text, messagesList) => {
     const message = createMessageObject(text, 'received');
     saveMessage(chatId, message);
     addMessageToUI(message, messagesList);

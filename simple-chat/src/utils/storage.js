@@ -1,36 +1,44 @@
 import { initialPeople } from '../data/people.js';
 
-export function loadPeople() {
-    const storedPeople = JSON.parse(localStorage.getItem('people'));
-    if (storedPeople && Array.isArray(storedPeople)) {
-        return storedPeople;
-    } else {
-        localStorage.setItem('people', JSON.stringify(initialPeople));
-        return initialPeople;
-    }
-}
+const LOCAL_STORAGE_KEY = 'chatAppData';
 
-export function getLastMessage(personId) {
-    const lastMessageId = localStorage.getItem(`${personId}.lastMessageId`);
-    if (lastMessageId) {
-        return JSON.parse(localStorage.getItem(`${personId}.message_${lastMessageId}`));
+export const loadPeople = () => {
+    const data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+    if (!data.people) {
+        data.people = initialPeople;
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+    }
+    return data.people;
+};
+
+export const getChatData = () => {
+    const data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+    return data.chats || {};
+};
+
+export const getLastMessage = (chatId) => {
+    const chats = getChatData();
+    const chat = chats[chatId];
+    if (chat && chat.messages.length > 0) {
+        return chat.messages[chat.messages.length - 1];
     }
     return null;
-}
+};
 
-export function markReceivedMessagesAsRead(personId) {
-    const lastMessageId = parseInt(localStorage.getItem(`${personId}.lastMessageId`));
-    if (lastMessageId) {
-        const messageKey = `${personId}.message_${lastMessageId}`;
-        const message = JSON.parse(localStorage.getItem(messageKey));
-        if (message && message.direction === 'received' && message.readStatus === 'unread') {
-            message.readStatus = 'read';
-            localStorage.setItem(messageKey, JSON.stringify(message));
-        }
+export const markReceivedMessagesAsRead = (chatId) => {
+    const chats = getChatData();
+    const chat = chats[chatId];
+    if (chat) {
+        chat.messages.forEach(message => {
+            if (message.direction === 'received' && message.readStatus === 'unread') {
+                message.readStatus = 'read';
+            }
+        });
+        saveChatData(chats);
     }
-}
+};
 
-export function createMessageObject(text, direction) {
+export const createMessageObject = (text, direction) => {
     const timeStamp = new Date();
 
     return {
@@ -40,11 +48,21 @@ export function createMessageObject(text, direction) {
         direction,
         readStatus: 'unread'
     };
-}
+};
 
-export function saveMessage(chatId, message) {
-    let lastMessageId = parseInt(localStorage.getItem(`${chatId}.lastMessageId`)) || 0;
-    lastMessageId += 1;
-    localStorage.setItem(`${chatId}.message_${lastMessageId}`, JSON.stringify(message));
-    localStorage.setItem(`${chatId}.lastMessageId`, `${lastMessageId}`);
-}
+export const saveMessage = (chatId, message) => {
+    const chats = getChatData();
+
+    if (!chats[chatId]) {
+        chats[chatId] = { messages: [], participants: [] };
+    }
+
+    chats[chatId].messages.push(message);
+    saveChatData(chats);
+};
+
+const saveChatData = (chats) => {
+    const data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+    data.chats = chats;
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+};

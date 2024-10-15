@@ -2,8 +2,8 @@ import './chatList.css'
 
 import { loadPeople, getLastMessage, markReceivedMessagesAsRead } from '../../utils/storage.js';
 
-export function renderChatList() {
-    let people = loadPeople();
+export const renderChatList = () => {
+    const people = loadPeople();
 
     const chatList = document.getElementById('chat-list');
     chatList.innerHTML = '';
@@ -28,7 +28,7 @@ export function renderChatList() {
     });
 }
 
-function createChatItem({ person, lastMessage }) {
+const createChatItem = ({ person, lastMessage }) => {
     const chatItem = document.createElement('li');
     chatItem.classList.add('chat-item');
     const chatItemStatusAndTime = document.createElement('div');
@@ -55,7 +55,7 @@ function createChatItem({ person, lastMessage }) {
     return chatItem;
 }
 
-function createStatusBadge(lastMessage) {
+const createStatusBadge = (lastMessage) => {
     let statusBadge = null;
 
     if (lastMessage) {
@@ -80,7 +80,7 @@ function createStatusBadge(lastMessage) {
     return statusBadge;
 }
 
-function createChatItemPhoto(person) {
+const createChatItemPhoto = (person) => {
     const chatItemPhotoDiv = document.createElement('div');
     chatItemPhotoDiv.classList.add('chat-item-photo');
     const img = document.createElement('img');
@@ -91,7 +91,7 @@ function createChatItemPhoto(person) {
     return chatItemPhotoDiv;
 }
 
-function createChatItemInfo(person, lastMessage) {
+const createChatItemInfo = (person, lastMessage) => {
     const lastMessageText = lastMessage ? lastMessage.text : '';
 
     const chatItemInfo = document.createElement('div');
@@ -111,7 +111,7 @@ function createChatItemInfo(person, lastMessage) {
     return chatItemInfo;
 }
 
-function createChatItemBadge(statusBadge) {
+const createChatItemBadge = (statusBadge) => {
     const chatItemBadge = document.createElement('div');
     if (statusBadge) {
         chatItemBadge.appendChild(statusBadge);
@@ -120,7 +120,7 @@ function createChatItemBadge(statusBadge) {
     return chatItemBadge;
 }
 
-function createChatItemTime(lastMessage) {
+const createChatItemTime = (lastMessage) => {
     const lastMessageTime = lastMessage
         ? new Date(lastMessage.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         : '';
