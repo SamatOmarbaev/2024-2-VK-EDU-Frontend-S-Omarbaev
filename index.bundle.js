@@ -97,7 +97,7 @@
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "#chat-list {\n    padding: 10px;\n}\n\n.chat-item {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    padding: 10px;\n    cursor: pointer;\n    border-bottom: 1px solid #ccc;\n    transition: background-color 0.3s;\n}\n\n.chat-item:hover {\n    background-color: #f0f0f0;\n    border-radius: 8px;\n}\n\n.chat-item-info {\n    display: flex;\n    flex-direction: column;\n    flex-grow: 1;\n    gap: 4px;\n}\n\n.chat-item-name {\n    font-weight: bold;\n}\n\n.chat-item-last-message {\n    color: #555;\n}\n\n.material-symbols-outlined {\n    font-size: 18px;\n    vertical-align: middle;\n    margin-left: 5px;\n}\n\n.message-status-icon {\n    align-self: flex-start;\n}\n\n.chat-item-photo {\n    max-width: 50px;\n    max-height: 50px;\n}\n\n.chat-item-photo img {\n    border-radius: 50%;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n}\n\n.chat-item-time {\n    font-size: 12px;\n    color: #999;\n}\n\n.unread-msgs-count {\n    background-color: #333;\n    color: white;\n    border-radius: 50%;\n    font-size: 12px;\n    height: 24px;\n    width: 24px;\n    text-align: center;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.create-chat-button {\n    position: fixed;\n    bottom: 20px;\n    right: 20px;\n    background-color: #333;\n    color: #fff;\n    border: none;\n    border-radius: 50%;\n    width: 60px;\n    height: 60px;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    animation: pulse 1.2s infinite;\n}\n\n.create-chat-button:hover {\n    background-color: #777;\n}\n\n@keyframes pulse {\n    0% {\n        transform: scale(1);\n    }\n    50% {\n        transform: scale(1.1);\n    }\n    100% {\n        transform: scale(1);\n    }\n}\n", ""]);
+exports.push([module.i, "#chat-list {\n    padding: 10px;\n}\n\n.chat-item {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    padding: 10px;\n    cursor: pointer;\n    border-bottom: 1px solid #ccc;\n}\n\n.chat-item-info {\n    display: flex;\n    flex-direction: column;\n    flex-grow: 1;\n    gap: 4px;\n}\n\n.chat-item-name {\n    font-weight: bold;\n}\n\n.chat-item-last-message {\n    color: #555;\n}\n\n.material-symbols-outlined {\n    font-size: 18px;\n    vertical-align: middle;\n    margin-left: 5px;\n}\n\n.message-status-icon {\n    align-self: flex-start;\n}\n\n.chat-item-photo {\n    max-width: 50px;\n    max-height: 50px;\n}\n\n.chat-item-photo img {\n    border-radius: 50%;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n}\n\n.chat-item-time {\n    font-size: 12px;\n    color: #999;\n}\n\n.unread-msgs-count {\n    background-color: #333;\n    color: white;\n    border-radius: 50%;\n    font-size: 12px;\n    height: 24px;\n    width: 24px;\n    text-align: center;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.create-chat-button {\n    position: fixed;\n    bottom: 20px;\n    right: 20px;\n    background-color: #333;\n    color: #fff;\n    border: none;\n    border-radius: 50%;\n    width: 60px;\n    height: 60px;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.create-chat-button:hover {\n    background-color: #777;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -533,7 +533,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_storage_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/storage.js */ "./utils/storage.js");
 
 
-function renderChatList() {
+var renderChatList = function renderChatList() {
   var people = Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["loadPeople"])();
   var chatList = document.getElementById('chat-list');
   chatList.innerHTML = '';
@@ -553,8 +553,8 @@ function renderChatList() {
     var chatItem = createChatItem(chat);
     chatList.appendChild(chatItem);
   });
-}
-function createChatItem(_ref) {
+};
+var createChatItem = function createChatItem(_ref) {
   var person = _ref.person,
     lastMessage = _ref.lastMessage;
   var chatItem = document.createElement('li');
@@ -576,8 +576,8 @@ function createChatItem(_ref) {
     window.location.href = "chat.html?id=".concat(person.id);
   });
   return chatItem;
-}
-function createStatusBadge(lastMessage) {
+};
+var createStatusBadge = function createStatusBadge(lastMessage) {
   var statusBadge = null;
   if (lastMessage) {
     if (lastMessage.direction === 'received' && lastMessage.readStatus === 'unread') {
@@ -598,8 +598,8 @@ function createStatusBadge(lastMessage) {
     }
   }
   return statusBadge;
-}
-function createChatItemPhoto(person) {
+};
+var createChatItemPhoto = function createChatItemPhoto(person) {
   var chatItemPhotoDiv = document.createElement('div');
   chatItemPhotoDiv.classList.add('chat-item-photo');
   var img = document.createElement('img');
@@ -607,8 +607,8 @@ function createChatItemPhoto(person) {
   img.alt = person.name;
   chatItemPhotoDiv.appendChild(img);
   return chatItemPhotoDiv;
-}
-function createChatItemInfo(person, lastMessage) {
+};
+var createChatItemInfo = function createChatItemInfo(person, lastMessage) {
   var lastMessageText = lastMessage ? lastMessage.text : '';
   var chatItemInfo = document.createElement('div');
   chatItemInfo.classList.add('chat-item-info');
@@ -621,15 +621,15 @@ function createChatItemInfo(person, lastMessage) {
   chatItemInfo.appendChild(chatItemName);
   chatItemInfo.appendChild(chatItemLastMessage);
   return chatItemInfo;
-}
-function createChatItemBadge(statusBadge) {
+};
+var createChatItemBadge = function createChatItemBadge(statusBadge) {
   var chatItemBadge = document.createElement('div');
   if (statusBadge) {
     chatItemBadge.appendChild(statusBadge);
   }
   return chatItemBadge;
-}
-function createChatItemTime(lastMessage) {
+};
+var createChatItemTime = function createChatItemTime(lastMessage) {
   var lastMessageTime = lastMessage ? new Date(lastMessage.timestamp).toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit'
@@ -638,7 +638,7 @@ function createChatItemTime(lastMessage) {
   chatItemTime.classList.add('chat-item-time');
   chatItemTime.textContent = lastMessageTime;
   return chatItemTime;
-}
+};
 
 /***/ }),
 
@@ -731,46 +731,53 @@ document.addEventListener('DOMContentLoaded', function () {
 /*!**************************!*\
   !*** ./utils/storage.js ***!
   \**************************/
-/*! exports provided: loadPeople, getLastMessage, markReceivedMessagesAsRead, createMessageObject, saveMessage */
+/*! exports provided: loadPeople, getChatData, getLastMessage, markReceivedMessagesAsRead, createMessageObject, saveMessage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadPeople", function() { return loadPeople; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChatData", function() { return getChatData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLastMessage", function() { return getLastMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markReceivedMessagesAsRead", function() { return markReceivedMessagesAsRead; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMessageObject", function() { return createMessageObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveMessage", function() { return saveMessage; });
 /* harmony import */ var _data_people_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../data/people.js */ "./data/people.js");
 
-function loadPeople() {
-  var storedPeople = JSON.parse(localStorage.getItem('people'));
-  if (storedPeople && Array.isArray(storedPeople)) {
-    return storedPeople;
-  } else {
-    localStorage.setItem('people', JSON.stringify(_data_people_js__WEBPACK_IMPORTED_MODULE_0__["initialPeople"]));
-    return _data_people_js__WEBPACK_IMPORTED_MODULE_0__["initialPeople"];
+var LOCAL_STORAGE_KEY = 'chatAppData';
+var loadPeople = function loadPeople() {
+  var data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+  if (!data.people) {
+    data.people = _data_people_js__WEBPACK_IMPORTED_MODULE_0__["initialPeople"];
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
   }
-}
-function getLastMessage(personId) {
-  var lastMessageId = localStorage.getItem("".concat(personId, ".lastMessageId"));
-  if (lastMessageId) {
-    return JSON.parse(localStorage.getItem("".concat(personId, ".message_").concat(lastMessageId)));
+  return data.people;
+};
+var getChatData = function getChatData() {
+  var data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+  return data.chats || {};
+};
+var getLastMessage = function getLastMessage(chatId) {
+  var chats = getChatData();
+  var chat = chats[chatId];
+  if (chat && chat.messages.length > 0) {
+    return chat.messages[chat.messages.length - 1];
   }
   return null;
-}
-function markReceivedMessagesAsRead(personId) {
-  var lastMessageId = parseInt(localStorage.getItem("".concat(personId, ".lastMessageId")));
-  if (lastMessageId) {
-    var messageKey = "".concat(personId, ".message_").concat(lastMessageId);
-    var message = JSON.parse(localStorage.getItem(messageKey));
-    if (message && message.direction === 'received' && message.readStatus === 'unread') {
-      message.readStatus = 'read';
-      localStorage.setItem(messageKey, JSON.stringify(message));
-    }
+};
+var markReceivedMessagesAsRead = function markReceivedMessagesAsRead(chatId) {
+  var chats = getChatData();
+  var chat = chats[chatId];
+  if (chat) {
+    chat.messages.forEach(function (message) {
+      if (message.direction === 'received' && message.readStatus === 'unread') {
+        message.readStatus = 'read';
+      }
+    });
+    saveChatData(chats);
   }
-}
-function createMessageObject(text, direction) {
+};
+var createMessageObject = function createMessageObject(text, direction) {
   var timeStamp = new Date();
   return {
     id: Date.now().toString(),
@@ -779,13 +786,23 @@ function createMessageObject(text, direction) {
     direction: direction,
     readStatus: 'unread'
   };
-}
-function saveMessage(chatId, message) {
-  var lastMessageId = parseInt(localStorage.getItem("".concat(chatId, ".lastMessageId"))) || 0;
-  lastMessageId += 1;
-  localStorage.setItem("".concat(chatId, ".message_").concat(lastMessageId), JSON.stringify(message));
-  localStorage.setItem("".concat(chatId, ".lastMessageId"), "".concat(lastMessageId));
-}
+};
+var saveMessage = function saveMessage(chatId, message) {
+  var chats = getChatData();
+  if (!chats[chatId]) {
+    chats[chatId] = {
+      messages: [],
+      participants: []
+    };
+  }
+  chats[chatId].messages.push(message);
+  saveChatData(chats);
+};
+var saveChatData = function saveChatData(chats) {
+  var data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+  data.chats = chats;
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+};
 
 /***/ })
 

@@ -97,7 +97,7 @@
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".chat-container {\n    display: flex;\n    flex-direction: column;\n    height: calc(100vh - 120px);\n    justify-content: flex-end;\n}\n\n.messages-container {\n    flex-grow: 1;\n    padding: 20px;\n    overflow-y: auto;\n    background: #eaeaea;\n    position: relative;\n}\n\n/* message list */\n.messages-list {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    display: flex;\n    flex-direction: column;\n}\n\n/* message */\n.message-item {\n    background-color: #f1f1d6;\n    max-width: 60%;\n    margin-bottom: 10px;\n    padding: 10px 40px 10px 15px;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);\n    position: relative;\n    word-wrap: break-word;\n    align-self: flex-start;\n    border-radius: 10px;\n    min-width: 60px;\n    transition: opacity 0.3s ease-in-out;\n}\n\n.message-item.sent {\n    align-self: flex-end;\n    background-color: #dcf8c6;\n}\n\n.message-item.received {\n    align-self: flex-start;\n    background-color: #fff;\n}\n\n.message-item .time {\n    font-size: 10px;\n    color: #999;\n    position: absolute;\n    bottom: 5px;\n    right: 10px;\n}\n\n.message-item .material-symbols-outlined {\n    font-size: 16px;\n    vertical-align: middle;\n    margin-left: 5px;\n}\n\n/* header */\n.header-avatar {\n    display: flex;\n    align-items: center;\n    gap: 1rem;\n}\n\n.header-avatar_photo {\n    border-radius: 50%;\n    height: 40px;\n    width: 40px;\n    min-width: 40px;\n    display: flex;\n}\n\n.header-avatar_title {\n    font-size: 22px;\n    font-weight: 500;\n}\n\n.header-search_more {\n    display: flex;\n    align-items: center;\n    gap: 2rem;\n}\n\n/* footer */\n.footer {\n    position: fixed;\n    width: 100%;\n    bottom: 0;\n    height: 60px;\n}\n\n.message-form {\n    display: flex;\n    align-items: center;\n    gap: 16px;\n    padding: 10px;\n    background-color: #fff;\n    border-top: 1px solid #d8d8d8;\n}\n\n#message-input {\n    width: 100%;\n    border: none;\n    padding: 10px;\n    font-size: 18px;\n\n    &:focus {\n        outline: none;\n    }\n}\n", ""]);
+exports.push([module.i, ".chat-container {\n    display: flex;\n    flex-direction: column;\n    height: calc(100vh - 120px);\n    justify-content: flex-end;\n}\n\n.messages-container {\n    flex-grow: 1;\n    padding: 20px;\n    overflow-y: auto;\n    background: #eaeaea;\n    position: relative;\n}\n\n/* message list */\n.messages-list {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    display: flex;\n    flex-direction: column;\n}\n\n/* message */\n.message-item {\n    background-color: #f1f1d6;\n    max-width: 60%;\n    margin-bottom: 10px;\n    padding: 10px 40px 10px 15px;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);\n    position: relative;\n    word-wrap: break-word;\n    align-self: flex-start;\n    border-radius: 10px;\n    min-width: 60px;\n}\n\n.message-item.sent {\n    align-self: flex-end;\n    background-color: #dcf8c6;\n}\n\n.message-item.received {\n    align-self: flex-start;\n    background-color: #fff;\n}\n\n.message-item .time {\n    font-size: 10px;\n    color: #999;\n    position: absolute;\n    bottom: 5px;\n    right: 10px;\n}\n\n.message-item .material-symbols-outlined {\n    font-size: 16px;\n    vertical-align: middle;\n    margin-left: 5px;\n}\n\n/* header */\n.header-avatar {\n    display: flex;\n    align-items: center;\n    gap: 1rem;\n}\n\n.header-avatar_photo {\n    border-radius: 50%;\n    height: 40px;\n    width: 40px;\n    min-width: 40px;\n    display: flex;\n}\n\n.header-avatar_title {\n    font-size: 22px;\n    font-weight: 500;\n}\n\n.header-search_more {\n    display: flex;\n    align-items: center;\n    gap: 2rem;\n}\n\n/* footer */\n.footer {\n    position: fixed;\n    width: 100%;\n    bottom: 0;\n    height: 60px;\n}\n\n.message-form {\n    display: flex;\n    align-items: center;\n    gap: 16px;\n    padding: 10px;\n    background-color: #fff;\n    border-top: 1px solid #d8d8d8;\n}\n\n#message-input {\n    width: 100%;\n    border: none;\n    padding: 10px;\n    font-size: 18px;\n\n    &:focus {\n        outline: none;\n    }\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -551,79 +551,62 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_storage_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/storage.js */ "./utils/storage.js");
 
 
-var messageInput = document.getElementById('message-input');
-var sendMessage = function sendMessage(chatId, messagesList) {
-  var messageText = messageInput.value.trim();
-  if (messageText) {
-    var message = Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["createMessageObject"])(messageText, 'sent');
-    Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["saveMessage"])(chatId, message);
-    addMessageToUI(message, messagesList);
-    messageInput.value = '';
-  }
-};
-function initializeChatWindow() {
+var initializeChatWindow = function initializeChatWindow() {
   var urlParams = new URLSearchParams(window.location.search);
   var chatId = urlParams.get('id');
   var form = document.querySelector('.message-form');
-  var sendButton = document.getElementById('send-button');
+  var input = document.getElementById('message-input');
   var messagesList = document.querySelector('.messages-list');
   fillHeader(chatId);
   document.addEventListener('DOMContentLoaded', function () {
     return loadMessages(chatId, messagesList);
   });
-  sendButton.addEventListener('click', function (event) {
-    event.preventDefault();
-    sendMessage(chatId, messagesList);
-  });
   form.addEventListener('submit', function (event) {
     event.preventDefault();
-    sendMessage(chatId, messagesList);
+    var messageText = input.value.trim();
+    if (!messageText) return;
+    var message = Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["createMessageObject"])(messageText, 'sent');
+    Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["saveMessage"])(chatId, message);
+    addMessageToUI(message, messagesList);
+    input.value = '';
   });
+  var simulatedReceivedMessageSent = false;
   setTimeout(function () {
-    simulateReceivedMessage(chatId, 'Привет) как дела?', messagesList);
+    if (!simulatedReceivedMessageSent) {
+      simulateReceivedMessage(chatId, 'Привет) как дела?', messagesList);
+      simulatedReceivedMessageSent = true;
+    }
   }, 5000);
-}
-function fillHeader(chatId) {
+};
+var fillHeader = function fillHeader(chatId) {
   var header = document.querySelector('.header');
   var people = Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["loadPeople"])();
   var person = people.find(function (p) {
     return p.id === chatId;
   });
-  if (person) {
-    header.innerHTML = "\n            <button id=\"back-btn\" class=\"material-symbols-outlined\">arrow_back_ios</button>\n            <div class=\"header-avatar\">\n                <div class=\"header-avatar_photo\">\n                    <img src=\"../../assets/avatar.svg\" alt=\"avatar photo\" />\n                </div>\n                <span class=\"header-avatar_title\">".concat(person.name, "</span>\n            </div>\n            <div class=\"header-search_more\">\n                <span class=\"material-symbols-outlined\">search</span>\n                <span class=\"material-symbols-outlined\">more_vert</span>\n            </div>\n        ");
-    var backButton = document.getElementById('back-btn');
-    backButton.onclick = function () {
-      return window.history.back();
-    };
-  } else {
+  if (!person) {
     console.error('Пользователь не найден:', chatId);
+    return;
   }
-}
-function getMessageId(chatId, id) {
-  return "".concat(chatId, ".message_").concat(id);
-}
-function loadMessages(chatId, messagesList) {
-  var lastMessageId = 0;
-  if (localStorage.getItem("".concat(chatId, ".lastMessageId")) !== null) {
-    lastMessageId = parseInt(localStorage.getItem("".concat(chatId, ".lastMessageId")));
-  }
-  for (var i = 1; i <= lastMessageId; i++) {
-    var messageKey = getMessageId(chatId, i);
-    var messageData = localStorage.getItem(messageKey);
-    if (messageData) {
-      var message = JSON.parse(messageData);
+  header.innerHTML = "\n            <button id=\"back-btn\" class=\"material-symbols-outlined\">arrow_back_ios</button>\n            <div class=\"header-avatar\">\n                <div class=\"header-avatar_photo\">\n                    <img src=\"../../assets/avatar.svg\" alt=\"avatar photo\" />\n                </div>\n                <span class=\"header-avatar_title\">".concat(person.name, "</span>\n            </div>\n            <div class=\"header-search_more\">\n                <span class=\"material-symbols-outlined\">search</span>\n                <span class=\"material-symbols-outlined\">more_vert</span>\n            </div>\n        ");
+  var backButton = document.getElementById('back-btn');
+  backButton.onclick = function () {
+    return window.history.back();
+  };
+};
+var loadMessages = function loadMessages(chatId, messagesList) {
+  var chats = Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["getChatData"])();
+  var chat = chats[chatId];
+  if (chat && chat.messages) {
+    chat.messages.forEach(function (message) {
       addMessageToUI(message, messagesList);
-    }
+    });
   }
   Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["markReceivedMessagesAsRead"])(chatId);
-}
-function addMessageToUI(message, messagesList) {
+};
+var addMessageToUI = function addMessageToUI(message, messagesList) {
   var messageItem = document.createElement('li');
   messageItem.classList.add('message-item', message.direction);
-  messageItem.style.opacity = '0';
-  setTimeout(function () {
-    messageItem.style.opacity = '1';
-  }, 10);
   var timeSpan = document.createElement('span');
   timeSpan.classList.add('time');
   timeSpan.textContent = new Date(message.timestamp).toLocaleTimeString([], {
@@ -644,12 +627,12 @@ function addMessageToUI(message, messagesList) {
   if (statusIcon) messageItem.appendChild(statusIcon);
   messageItem.appendChild(timeSpan);
   messagesList.appendChild(messageItem);
-}
-function simulateReceivedMessage(chatId, text, messagesList) {
+};
+var simulateReceivedMessage = function simulateReceivedMessage(chatId, text, messagesList) {
   var message = Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["createMessageObject"])(text, 'received');
   Object(_utils_storage_js__WEBPACK_IMPORTED_MODULE_1__["saveMessage"])(chatId, message);
   addMessageToUI(message, messagesList);
-}
+};
 
 /***/ }),
 
@@ -722,46 +705,53 @@ var initialPeople = [{
 /*!**************************!*\
   !*** ./utils/storage.js ***!
   \**************************/
-/*! exports provided: loadPeople, getLastMessage, markReceivedMessagesAsRead, createMessageObject, saveMessage */
+/*! exports provided: loadPeople, getChatData, getLastMessage, markReceivedMessagesAsRead, createMessageObject, saveMessage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadPeople", function() { return loadPeople; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChatData", function() { return getChatData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLastMessage", function() { return getLastMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markReceivedMessagesAsRead", function() { return markReceivedMessagesAsRead; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMessageObject", function() { return createMessageObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveMessage", function() { return saveMessage; });
 /* harmony import */ var _data_people_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../data/people.js */ "./data/people.js");
 
-function loadPeople() {
-  var storedPeople = JSON.parse(localStorage.getItem('people'));
-  if (storedPeople && Array.isArray(storedPeople)) {
-    return storedPeople;
-  } else {
-    localStorage.setItem('people', JSON.stringify(_data_people_js__WEBPACK_IMPORTED_MODULE_0__["initialPeople"]));
-    return _data_people_js__WEBPACK_IMPORTED_MODULE_0__["initialPeople"];
+var LOCAL_STORAGE_KEY = 'chatAppData';
+var loadPeople = function loadPeople() {
+  var data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+  if (!data.people) {
+    data.people = _data_people_js__WEBPACK_IMPORTED_MODULE_0__["initialPeople"];
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
   }
-}
-function getLastMessage(personId) {
-  var lastMessageId = localStorage.getItem("".concat(personId, ".lastMessageId"));
-  if (lastMessageId) {
-    return JSON.parse(localStorage.getItem("".concat(personId, ".message_").concat(lastMessageId)));
+  return data.people;
+};
+var getChatData = function getChatData() {
+  var data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+  return data.chats || {};
+};
+var getLastMessage = function getLastMessage(chatId) {
+  var chats = getChatData();
+  var chat = chats[chatId];
+  if (chat && chat.messages.length > 0) {
+    return chat.messages[chat.messages.length - 1];
   }
   return null;
-}
-function markReceivedMessagesAsRead(personId) {
-  var lastMessageId = parseInt(localStorage.getItem("".concat(personId, ".lastMessageId")));
-  if (lastMessageId) {
-    var messageKey = "".concat(personId, ".message_").concat(lastMessageId);
-    var message = JSON.parse(localStorage.getItem(messageKey));
-    if (message && message.direction === 'received' && message.readStatus === 'unread') {
-      message.readStatus = 'read';
-      localStorage.setItem(messageKey, JSON.stringify(message));
-    }
+};
+var markReceivedMessagesAsRead = function markReceivedMessagesAsRead(chatId) {
+  var chats = getChatData();
+  var chat = chats[chatId];
+  if (chat) {
+    chat.messages.forEach(function (message) {
+      if (message.direction === 'received' && message.readStatus === 'unread') {
+        message.readStatus = 'read';
+      }
+    });
+    saveChatData(chats);
   }
-}
-function createMessageObject(text, direction) {
+};
+var createMessageObject = function createMessageObject(text, direction) {
   var timeStamp = new Date();
   return {
     id: Date.now().toString(),
@@ -770,13 +760,23 @@ function createMessageObject(text, direction) {
     direction: direction,
     readStatus: 'unread'
   };
-}
-function saveMessage(chatId, message) {
-  var lastMessageId = parseInt(localStorage.getItem("".concat(chatId, ".lastMessageId"))) || 0;
-  lastMessageId += 1;
-  localStorage.setItem("".concat(chatId, ".message_").concat(lastMessageId), JSON.stringify(message));
-  localStorage.setItem("".concat(chatId, ".lastMessageId"), "".concat(lastMessageId));
-}
+};
+var saveMessage = function saveMessage(chatId, message) {
+  var chats = getChatData();
+  if (!chats[chatId]) {
+    chats[chatId] = {
+      messages: [],
+      participants: []
+    };
+  }
+  chats[chatId].messages.push(message);
+  saveChatData(chats);
+};
+var saveChatData = function saveChatData(chats) {
+  var data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+  data.chats = chats;
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+};
 
 /***/ })
 
