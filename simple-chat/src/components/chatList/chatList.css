@@ -1,0 +1,87 @@
+#chat-list {
+    padding: 10px;
+}
+
+.chat-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+}
+
+.chat-item-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 4px;
+}
+
+.chat-item-name {
+    font-weight: bold;
+}
+
+.chat-item-last-message {
+    color: #555;
+}
+
+.material-symbols-outlined {
+    font-size: 18px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.message-status-icon {
+    align-self: flex-start;
+}
+
+.chat-item-photo {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.chat-item-photo img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chat-item-time {
+    font-size: 12px;
+    color: #999;
+}
+
+.unread-msgs-count {
+    background-color: #333;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    height: 24px;
+    width: 24px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-chat-button:hover {
+    background-color: #777;
+}
