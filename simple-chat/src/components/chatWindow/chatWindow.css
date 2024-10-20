@@ -34,6 +34,7 @@
     align-self: flex-start;
     border-radius: 10px;
     min-width: 60px;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .message-item.sent {
