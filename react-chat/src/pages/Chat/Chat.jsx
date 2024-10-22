@@ -1,7 +1,7 @@
 import styles from "./Chat.module.scss";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import SearchIcon from "@mui/icons-material/Search";
-import MoreIcon from "@mui/icons-material/More";
+import MoreIcon from "@mui/icons-material/MoreVertOutlined";
 import ChatWindow from "../../components/ChatWindow/ChatWindow";
 import { loadPeople } from "../../utils/storage";
 
@@ -9,7 +9,7 @@ export const Chat = ({ chatId, onBack }) => {
   const person = loadPeople().find((p) => p.id === chatId);
 
   return (
-    <div>
+    <>
       <header className={styles.Header}>
         <button onClick={onBack}>
           <ArrowBack />
@@ -25,7 +25,9 @@ export const Chat = ({ chatId, onBack }) => {
           <MoreIcon />
         </div>
       </header>
-      <ChatWindow chatId={chatId} onBack={onBack} />
-    </div>
+      <main className={styles.chatContainer}>
+        <ChatWindow chatId={chatId} onBack={onBack} />
+      </main>
+    </>
   );
 };

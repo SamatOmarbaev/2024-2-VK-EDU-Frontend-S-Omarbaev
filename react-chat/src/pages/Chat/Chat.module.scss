@@ -33,3 +33,10 @@
   align-items: center;
   gap: 2rem;
 }
+
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+  justify-content: flex-end;
+}

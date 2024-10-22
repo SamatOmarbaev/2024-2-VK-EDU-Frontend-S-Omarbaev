@@ -4,6 +4,7 @@ import {
   saveMessage,
   createMessageObject,
 } from "../../utils/storage";
+import SendIcon from "@mui/icons-material/Send";
 import styles from "./ChatWindow.module.scss";
 
 const ChatWindow = ({ chatId }) => {
@@ -12,36 +13,79 @@ const ChatWindow = ({ chatId }) => {
 
   useEffect(() => {
     const chat = getChatData()[chatId];
+
     if (chat && chat.messages) {
       setMessages(chat.messages);
     }
+
+    const simulateReceivedMessageSent = setTimeout(() => {
+      const text = "Привет) как дела?";
+      const message = createMessageObject(text, "received");
+      saveMessage(chatId, message);
+      setMessages((prevMessages) => [...prevMessages, message]);
+    }, 5000);
+
+    return () => clearTimeout(simulateReceivedMessageSent);
   }, [chatId]);
 
-  const sendMessage = () => {
+  const sendMessage = (e) => {
+    e.preventDefault();
+
+    if (messageText.trim() === "") return;
+
     const message = createMessageObject(messageText, "sent");
     saveMessage(chatId, message);
     setMessages((prevMessages) => [...prevMessages, message]);
     setMessageText("");
   };
 
+  const markAsRead = (messageId) => {
+    setMessages((prevMessages) =>
+      prevMessages.map((msg) =>
+        msg.id === messageId ? { ...msg, read: true } : msg
+      )
+    );
+  };
+
   return (
-    <div className={styles.chatWindow}>
-      <ul className={styles.messagesList}>
-        {messages.map((msg) => (
-          <li key={msg.id} className={msg.direction}>
-            {msg.text}
-          </li>
-        ))}
-      </ul>
+    <>
+      <div className={styles.messagesContainer}>
+        <ul className={styles.messagesList}>
+          {messages.map((msg) => (
+            <li
+              key={msg.id}
+              className={`${styles.messageItem} ${
+                msg.read ? styles.received : styles.sent
+              }`}
+              onClick={() =>
+                msg.direction === "received" && !msg.read && markAsRead(msg.id)
+              }
+            >
+              <span>{msg.text}</span>
+              {msg.direction === "sent" && msg.read && (
+                <span className={styles.checkmark}>✔️</span>
+              )}
+              <span className={styles.time}>
+                {new Date().toLocaleTimeString(msg.timestamp)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
       <footer className={styles.footer}>
-        <input
-          value={messageText}
-          onChange={(e) => setMessageText(e.target.value)}
-          placeholder="Type a message"
-        />
-        <button onClick={sendMessage}>Send</button>
+        <form className={styles.messageForm}>
+          <input
+            value={messageText}
+            onChange={(e) => setMessageText(e.target.value)}
+            placeholder="Сообщение"
+            className={styles.messageInput}
+          />
+          <button onClick={sendMessage}>
+            <SendIcon />
+          </button>
+        </form>
       </footer>
-    </div>
+    </>
   );
 };
 

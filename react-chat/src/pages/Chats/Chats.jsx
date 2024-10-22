@@ -6,7 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 const Chats = ({ onChatSelect }) => {
   return (
-    <div>
+    <>
       <header className={styles.Header}>
         <MenuIcon />
         <h2>Список чатов</h2>
@@ -16,7 +16,7 @@ const Chats = ({ onChatSelect }) => {
       <button className={styles.CreateChatButton}>
         <EditIcon />
       </button>
-    </div>
+    </>
   );
 };
 

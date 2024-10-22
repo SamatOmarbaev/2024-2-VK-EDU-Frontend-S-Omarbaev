@@ -46,7 +46,7 @@ export const createMessageObject = (text, direction) => {
         text,
         timestamp: timeStamp.getTime(),
         direction,
-        readStatus: 'unread'
+        read: direction === 'sent' ? false : true
     };
 };
 
