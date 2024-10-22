@@ -1,0 +1,67 @@
+.ChatList {
+  padding: 10px;
+}
+
+.ChatItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+  transition: background-color 0.3s;
+}
+
+.ChatItem:hover {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+.ChatInfo {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 4px;
+}
+
+.ChatName {
+  font-weight: bold;
+}
+
+.ChatLastMessage {
+  color: #555;
+}
+
+.message-status-icon {
+  align-self: flex-start;
+}
+
+.ChatPhoto {
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.ChatPhoto img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chat-item-time {
+  font-size: 12px;
+  color: #999;
+}
+
+.unread-msgs-count {
+  background-color: #333;
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  height: 24px;
+  width: 24px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,35 @@
+.Header {
+  padding: 1rem;
+  width: 100%;
+  height: 60px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333;
+}
+
+.HeaderAvatar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.HeaderAvatarPhoto {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  display: flex;
+}
+
+.HeaderAvatarTitle {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.HeaderSearchMore {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
