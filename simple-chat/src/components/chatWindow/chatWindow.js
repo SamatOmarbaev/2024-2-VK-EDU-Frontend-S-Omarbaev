@@ -22,6 +22,8 @@ export const initializeChatWindow = () => {
     const sendButton = document.getElementById('send-button');
     const messagesList = document.querySelector('.messages-list');
 
+    messageInput.focus()
+
     fillHeader(chatId);
 
     document.addEventListener('DOMContentLoaded', () => loadMessages(chatId, messagesList));
@@ -40,6 +42,13 @@ export const initializeChatWindow = () => {
             saveMessage(chatId, message);
             addMessageToUI(message, messagesList);
             input.value = '';
+        }
+    });
+
+    messageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            sendMessage(chatId, messagesList);
         }
     });
 
