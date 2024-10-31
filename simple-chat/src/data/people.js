@@ -2,7 +2,7 @@ export const initialPeople = [
     {
         id: '1',
         name: 'Leanne Graham',
-        photo: 'https://picsum.photos/50/50?random=23213',
+        photo: 'https://via.placeholder.com/50',
     },
     {
         id: '2',
