@@ -43,7 +43,7 @@
 }
 
 .message-item.received {
-    align-self: flex-start;
+    align-self: flex-end;
     background-color: #fff;
 }
 
@@ -87,6 +87,11 @@
     gap: 2rem;
 }
 
+.header-search_more span:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s;
+}
+
 /* footer */
 .footer {
     position: fixed;
@@ -112,5 +117,35 @@
 
     &:focus {
         outline: none;
+    }
+}
+
+#send-button:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s;
+}
+
+#back-btn {
+    height: 40px;
+    width: 40px;
+    padding-left: 8px;
+    border-radius: 50%;
+    transition: all .3s ease-in-out;
+}
+#back-btn:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    height: 40px;
+    width: 40px;
+    padding-left: 8px;
+    border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+    .message-item.sent {
+        align-self: flex-end;
+    }
+    
+    .message-item.received {
+        align-self: flex-start;
     }
 }
