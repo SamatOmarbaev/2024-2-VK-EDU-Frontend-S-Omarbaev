@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
 import { loadPeople, getLastMessage } from "../../utils/storage";
 import styles from "./ChatList.module.scss";
 
-const ChatList = ({ onChatSelect }) => {
+const ChatList = () => {
   const people = loadPeople();
 
   const chatsWithLastMessage = people.map((person) => {
@@ -15,10 +16,10 @@ const ChatList = ({ onChatSelect }) => {
   return (
     <ul className={styles.ChatList}>
       {chatsWithLastMessage.map((chat) => (
-        <li
+        <Link
+          to={`/chat/${chat.person.id}`}
           key={chat.person.id}
           className={styles.ChatItem}
-          onClick={() => onChatSelect(chat.person.id)}
         >
           <img
             src={chat.person.photo}
@@ -31,7 +32,7 @@ const ChatList = ({ onChatSelect }) => {
               {chat.lastMessage ? chat.lastMessage.text : ""}
             </span>
           </div>
-        </li>
+        </Link>
       ))}
     </ul>
   );

@@ -1,18 +1,17 @@
-import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import "./index.css";
 import Chats from "./pages/Chats/Chats";
 import { Chat } from "./pages/Chat/Chat";
+import { Profile } from "./pages/Profile/Profile";
 
 const App = () => {
-  const [activeChatId, setActiveChatId] = useState(null);
-
   return (
     <div className="app">
-      {activeChatId === null ? (
-        <Chats onChatSelect={setActiveChatId} />
-      ) : (
-        <Chat chatId={activeChatId} onBack={() => setActiveChatId(null)} />
-      )}
+      <Routes>
+        <Route path="/" element={<Chats />} />
+        <Route path="/chat/:chatId" element={<Chat />} />
+        <Route path="/chat/:chatId/profile" element={<Profile />} />
+      </Routes>
     </div>
   );
 };
