@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://samatomarbaev.github.io/2024-2-VK-EDU-Frontend-S-Omarbaev/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -14,6 +15,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.4",
     "@mui/material": "^6.1.4",
+    "classnames": "^2.5.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0",

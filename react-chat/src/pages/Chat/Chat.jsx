@@ -1,15 +1,24 @@
-import styles from "./Chat.module.scss";
+import { memo } from "react";
+
+import { ChatWindow } from "../../components/ChatWindow/ChatWindow";
+import { Header } from "../../components/Header/Header";
+import { Button } from "../../components/Button/Button";
+import { usePeople } from "../../hooks/usePeople";
+
+import avatar from "../../assets/avatar.svg";
+
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreIcon from "@mui/icons-material/MoreVertOutlined";
-import ChatWindow from "../../components/ChatWindow/ChatWindow";
-import { loadPeople } from "../../utils/storage";
+
+import styles from "./Chat.module.scss";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-export const Chat = () => {
+export const Chat = memo(() => {
   const navigate = useNavigate();
   const { chatId } = useParams();
-  const person = loadPeople().find((p) => p.id === chatId);
+  const people = usePeople();
+  const person = people.find((p) => p.id === chatId);
 
   const goBack = () => {
     navigate(-1);
@@ -17,9 +26,18 @@ export const Chat = () => {
 
   return (
     <>
-      <header className={styles.Header}>
-        <button onClick={goBack}>
+      <Header>
+        <Button shadow onButtonClick={onBack}>
           <ArrowBack />
+        </Button>
+        <div className={styles.HeaderAvatar}>
+          <img
+            src={avatar}
+            alt="avatar photo"
+            className={styles.HeaderAvatarPhoto}
+          />
+          <span className={styles.HeaderAvatarTitle}>{person?.name}</span>
+        </div>
         </button>
         <Link to={"profile"} className={styles.HeaderAvatar}>
           <div className={styles.HeaderAvatarPhoto}>
@@ -28,13 +46,17 @@ export const Chat = () => {
           <span className={styles.HeaderAvatarTitle}>{person?.name}</span>
         </Link>
         <div className={styles.HeaderSearchMore}>
-          <SearchIcon />
-          <MoreIcon />
+          <Button>
+            <SearchIcon />
+          </Button>
+          <Button>
+            <MoreIcon />
+          </Button>
         </div>
-      </header>
-      <main className={styles.chatContainer}>
-        <ChatWindow chatId={chatId} />
+      </Header>
+      <main className={styles.ChatContainer}>
+        <ChatWindow chatId={chatId} onBack={onBack} />
       </main>
     </>
   );
-};
+});
