@@ -1,6 +1,5 @@
 import { memo } from "react";
 import cn from "classnames";
-
 import styles from "./ChatMessageElement.module.scss";
 
 export const ChatMessageElement = memo(({ msg, markAsRead }) => {

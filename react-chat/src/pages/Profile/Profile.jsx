@@ -1,36 +1,47 @@
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Header } from "../../components/Header/Header";
+import { Button } from "../../components/Button/Button";
+import { usePeople } from "../../hooks/usePeople";
+import { ROUTES } from "../../constants/constants";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import CheckIcon from "@mui/icons-material/Check";
-import { loadPeople } from "../../utils/storage";
+import avatar from "../../assets/avatar.svg";
 import styles from "./Profile.module.scss";
-import { useState } from "react";
 
 export const Profile = () => {
   const navigate = useNavigate();
   const { chatId } = useParams();
-  const person = loadPeople().find((p) => p.id === chatId);
+  const people = usePeople();
+  const person = people.find((p) => p.id === chatId);
   const [valueName, setValueName] = useState(person?.name);
   const [valueBio, setValueBio] = useState("");
 
   const goBack = () => {
-    navigate(-1);
+    navigate(ROUTES.CHATS);
   };
+
+  const handleChangeName = (e) => setValueName(e.target.value);
+
+  const handleChangeBio = (e) => setValueBio(e.target.value);
 
   return (
     <>
-      <header className={styles.Header}>
-        <button onClick={goBack}>
+      <Header>
+        <Button shadow onButtonClick={goBack}>
           <ArrowBack />
-        </button>
+        </Button>
         <h2>Edit Profile</h2>
-        <div className={styles.HeaderSearchMore}>
+        <Button>
           <CheckIcon />
-        </div>
-      </header>
+        </Button>
+      </Header>
       <div className={styles.ProfileContent}>
-        <div className={styles.ProfileImgContainer}>
-          <img src={person.photo} alt={`${person?.name}'s photo`} />
-        </div>
+        <img
+          src={avatar}
+          alt={`${person?.name}'s photo`}
+          className={styles.ProfileImgContainer}
+        />
         <div className={styles.InputContainer}>
           <label className={valueName ? styles.LabelActive : styles.Label}>
             Full name
@@ -38,7 +49,7 @@ export const Profile = () => {
           <input
             type="text"
             value={valueName}
-            onChange={(e) => setValueName(e.target.value)}
+            onChange={handleChangeName}
             className={styles.InputName}
             required
           />
@@ -50,7 +61,7 @@ export const Profile = () => {
           <textarea
             type="text"
             value={valueBio}
-            onChange={(e) => setValueBio(e.target.value)}
+            onChange={handleChangeBio}
             className={styles.InputName}
             required
           />

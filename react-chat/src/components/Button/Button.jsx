@@ -1,7 +1,6 @@
 import { memo } from "react";
-import styles from "./Button.module.scss";
-
 import cn from "classnames";
+import styles from "./Button.module.scss";
 
 export const Button = memo(({ children, shadow, animation, onButtonClick }) => {
   return (

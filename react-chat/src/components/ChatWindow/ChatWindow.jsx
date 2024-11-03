@@ -1,9 +1,7 @@
 import { memo, useEffect, useState } from "react";
-
 import { FormFooter } from "../FormFooter/FormFooter";
 import { ChatMessageElement } from "../ChatMessageElement/ChatMessageElement";
 import { createMessageObject, getChatData, saveMessage } from "../../api/chats";
-
 import styles from "./ChatWindow.module.scss";
 
 const addNewMessage = ({ text, status, id, setMessages }) => {
