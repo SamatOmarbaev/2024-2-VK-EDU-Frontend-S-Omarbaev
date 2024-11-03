@@ -1,23 +1,29 @@
-import ChatList from "../../components/ChatList/ChatList";
-import styles from "./Chats.module.scss";
+import { memo } from "react";
+
+import { ChatList } from "../../components/ChatList/ChatList";
+import { Header } from "../../components/Header/Header";
+import { Button } from "../../components/Button/Button";
+
 import EditIcon from "@mui/icons-material/Edit";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 
-const Chats = ({ onChatSelect }) => {
+export const Chats = memo(({ onChatSelect }) => {
   return (
     <>
-      <header className={styles.Header}>
-        <MenuIcon />
+      <Header>
+        <Button shadow>
+          <MenuIcon />
+        </Button>
         <h2>Список чатов</h2>
-        <SearchIcon />
-      </header>
+        <Button>
+          <SearchIcon />
+        </Button>
+      </Header>
       <ChatList onChatSelect={onChatSelect} />
-      <button className={styles.CreateChatButton}>
+      <Button animation>
         <EditIcon />
-      </button>
+      </Button>
     </>
   );
-};
-
-export default Chats;
+});

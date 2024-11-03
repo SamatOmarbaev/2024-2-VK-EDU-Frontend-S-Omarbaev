@@ -1,4 +1,4 @@
-.messagesContainer {
+.MessagesContainer {
   flex-grow: 1;
   padding: 20px;
   overflow-y: auto;
@@ -6,72 +6,10 @@
   position: relative;
 }
 
-/* message list */
-.messagesList {
+.MessagesList {
   list-style-type: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-}
-
-/* message */
-.messageItem {
-  background-color: #f1f1d6;
-  max-width: 60%;
-  margin-bottom: 10px;
-  padding: 10px 50px 10px 15px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  position: relative;
-  word-wrap: break-word;
-  align-self: flex-start;
-  border-radius: 10px;
-  min-width: 60px;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.sent {
-  align-self: flex-end;
-  background-color: #dcf8c6;
-}
-
-.received {
-  align-self: flex-start;
-  background-color: #fff;
-}
-
-.time {
-  font-size: 10px;
-  color: #999;
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-}
-
-/* footer */
-.footer {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  height: 60px;
-}
-
-.messageForm {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 10px;
-  background-color: #fff;
-  border-top: 1px solid #d8d8d8;
-}
-
-.messageInput {
-  width: 100%;
-  border: none;
-  padding: 10px;
-  font-size: 18px;
-
-  &:focus {
-    outline: none;
-  }
 }

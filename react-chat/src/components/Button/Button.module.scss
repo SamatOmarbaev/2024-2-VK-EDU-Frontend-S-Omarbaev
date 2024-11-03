@@ -1,0 +1,54 @@
+.Button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Button:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s;
+}
+
+.ButtonShadow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 0.25rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.ButtonShadow:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  transform: scale(1.1);
+  transition: transform 0.3s box-shadow 0.3s;
+}
+
+.AnimationButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 1.2s normal;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

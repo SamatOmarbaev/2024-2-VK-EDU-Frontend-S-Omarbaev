@@ -1,18 +1,24 @@
-import { useEffect, useState } from "react";
-import {
-  getChatData,
-  saveMessage,
-  createMessageObject,
-} from "../../utils/storage";
-import SendIcon from "@mui/icons-material/Send";
+import { memo, useEffect, useState } from "react";
+
+import { FormFooter } from "../FormFooter/FormFooter";
+import { ChatMessageElement } from "../ChatMessageElement/ChatMessageElement";
+import { createMessageObject, getChatData, saveMessage } from "../../api/chats";
+
 import styles from "./ChatWindow.module.scss";
 
-const ChatWindow = ({ chatId }) => {
+const addNewMessage = ({ text, status, id, setMessages }) => {
+  const message = createMessageObject(text, status);
+  saveMessage(id, message);
+  setMessages((prevMessages) => [...prevMessages, message]);
+};
+
+export const ChatWindow = memo(({ chatId }) => {
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState("");
 
   useEffect(() => {
-    const chat = getChatData()[chatId];
+    const chatData = getChatData();
+    const chat = chatData[chatId];
 
     if (chat && chat.messages) {
       setMessages(chat.messages);
@@ -20,22 +26,26 @@ const ChatWindow = ({ chatId }) => {
 
     const simulateReceivedMessageSent = setTimeout(() => {
       const text = "Привет) как дела?";
-      const message = createMessageObject(text, "received");
-      saveMessage(chatId, message);
-      setMessages((prevMessages) => [...prevMessages, message]);
+      addNewMessage({
+        text,
+        status: "received",
+        id: chatId,
+        setMessages,
+      });
     }, 5000);
 
     return () => clearTimeout(simulateReceivedMessageSent);
   }, [chatId]);
 
-  const sendMessage = (e) => {
-    e.preventDefault();
-
+  const sendMessage = () => {
     if (messageText.trim() === "") return;
 
-    const message = createMessageObject(messageText, "sent");
-    saveMessage(chatId, message);
-    setMessages((prevMessages) => [...prevMessages, message]);
+    addNewMessage({
+      text: messageText,
+      status: "sent",
+      id: chatId,
+      setMessages,
+    });
     setMessageText("");
   };
 
@@ -49,44 +59,22 @@ const ChatWindow = ({ chatId }) => {
 
   return (
     <>
-      <div className={styles.messagesContainer}>
-        <ul className={styles.messagesList}>
+      <div className={styles.MessagesContainer}>
+        <ul className={styles.MessagesList}>
           {messages.map((msg) => (
-            <li
+            <ChatMessageElement
               key={msg.id}
-              className={`${styles.messageItem} ${
-                msg.read ? styles.received : styles.sent
-              }`}
-              onClick={() =>
-                msg.direction === "received" && !msg.read && markAsRead(msg.id)
-              }
-            >
-              <span>{msg.text}</span>
-              {msg.direction === "sent" && msg.read && (
-                <span className={styles.checkmark}>✔️</span>
-              )}
-              <span className={styles.time}>
-                {new Date().toLocaleTimeString(msg.timestamp)}
-              </span>
-            </li>
+              msg={msg}
+              markAsRead={markAsRead}
+            />
           ))}
         </ul>
       </div>
-      <footer className={styles.footer}>
-        <form className={styles.messageForm}>
-          <input
-            value={messageText}
-            onChange={(e) => setMessageText(e.target.value)}
-            placeholder="Сообщение"
-            className={styles.messageInput}
-          />
-          <button onClick={sendMessage}>
-            <SendIcon />
-          </button>
-        </form>
-      </footer>
+      <FormFooter
+        messageText={messageText}
+        setMessageText={setMessageText}
+        sendMessage={sendMessage}
+      />
     </>
   );
-};
-
-export default ChatWindow;
+});

@@ -1,19 +1,8 @@
-import { initialPeople } from "./people";
-
-const LOCAL_STORAGE_KEY = 'chatAppData';
-
-export const loadPeople = () => {
-    const data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
-    if (!data.people) {
-        data.people = initialPeople;
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
-    }
-    return data.people;
-};
+import { loadData, saveData } from "../utils/localstorage";
 
 export const getChatData = () => {
-    const data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
-    return data.chats || {};
+    const data = loadData();
+    return data.chats || null;
 };
 
 export const getLastMessage = (chatId) => {
@@ -62,7 +51,7 @@ export const saveMessage = (chatId, message) => {
 };
 
 const saveChatData = (chats) => {
-    const data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+    const data = loadData();
     data.chats = chats;
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+    saveData(data);
 };

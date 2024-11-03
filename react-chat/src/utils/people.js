@@ -39,14 +39,4 @@ export const initialPeople = [
         name: 'Nicholas Runolfsdottir V',
         photo: 'https://picsum.photos/50/50?random=143156',
     },
-    {
-        id: '9',
-        name: 'Glenna Reichert',
-        photo: 'https://picsum.photos/50/50?random=123123',
-    },
-    {
-        id: '10',
-        name: 'Clementina DuBuque',
-        photo: 'https://picsum.photos/50/50?random=5465',
-    },
 ];
