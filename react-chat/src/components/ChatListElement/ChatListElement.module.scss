@@ -5,11 +5,11 @@
   padding: 10px;
   cursor: pointer;
   border-bottom: 1px solid #ccc;
-}
 
-.ChatItem:hover {
-  background-color: #e1e1e1;
-  transition: background-color 0.3s;
+  &:hover {
+    background-color: #e1e1e1;
+    transition: background-color 0.3s;
+  }
 }
 
 .ChatPhoto {

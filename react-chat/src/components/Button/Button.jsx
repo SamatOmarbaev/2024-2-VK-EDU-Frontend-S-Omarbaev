@@ -1,8 +1,7 @@
-import { memo } from "react";
 import cn from "classnames";
 import styles from "./Button.module.scss";
 
-export const Button = memo(({ children, shadow, animation, onButtonClick }) => {
+export const Button = ({ children, shadow, animation, onButtonClick }) => {
   return (
     <button
       type="button"
@@ -15,4 +14,4 @@ export const Button = memo(({ children, shadow, animation, onButtonClick }) => {
       {children}
     </button>
   );
-});
+};

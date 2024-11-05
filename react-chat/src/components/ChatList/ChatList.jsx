@@ -1,9 +1,8 @@
-import { memo } from "react";
 import { ChatListElement } from "../ChatListElement/ChatListElement";
 import { getLastMessage } from "../../api/chats";
 import { usePeople } from "../../hooks/usePeople";
 
-export const ChatList = memo(() => {
+export const ChatList = () => {
   const people = usePeople();
 
   const chatsWithLastMessage = people.map((person) => {
@@ -21,4 +20,4 @@ export const ChatList = memo(() => {
       ))}
     </ul>
   );
-});
+};

@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FormFooter } from "../FormFooter/FormFooter";
 import { ChatMessageElement } from "../ChatMessageElement/ChatMessageElement";
 import { createMessageObject, getChatData, saveMessage } from "../../api/chats";
@@ -10,7 +10,7 @@ const addNewMessage = ({ text, status, id, setMessages }) => {
   setMessages((prevMessages) => [...prevMessages, message]);
 };
 
-export const ChatWindow = memo(({ chatId }) => {
+export const ChatWindow = ({ chatId }) => {
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState("");
 
@@ -75,4 +75,4 @@ export const ChatWindow = memo(({ chatId }) => {
       />
     </>
   );
-});
+};
