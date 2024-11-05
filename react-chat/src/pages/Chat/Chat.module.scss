@@ -1,0 +1,33 @@
+.HeaderAvatar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.HeaderAvatarPhoto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  background: #e7e7e7;
+}
+
+.HeaderAvatarTitle {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.HeaderSearchMore {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.ChatContainer {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+  justify-content: flex-end;
+}

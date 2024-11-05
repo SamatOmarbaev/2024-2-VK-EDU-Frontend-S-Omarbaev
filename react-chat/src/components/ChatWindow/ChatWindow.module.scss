@@ -1,0 +1,15 @@
+.MessagesContainer {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: #eaeaea;
+  position: relative;
+}
+
+.MessagesList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
