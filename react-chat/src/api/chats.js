@@ -2,7 +2,7 @@ import { loadData, saveData } from "../utils/localstorage";
 
 export const getChatData = () => {
     const data = loadData();
-    return data.chats || null;
+    return data.chats || {};
 };
 
 export const getLastMessage = (chatId) => {

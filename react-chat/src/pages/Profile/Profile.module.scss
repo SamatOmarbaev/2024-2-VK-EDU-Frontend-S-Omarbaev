@@ -1,0 +1,45 @@
+.ProfileContent {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.ProfileImgContainer {
+  align-self: center;
+  background-color: #cecece;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+}
+
+.InputContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.Label {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  transition: all 0.2s ease;
+}
+
+.LabelActive {
+  position: absolute;
+  top: -16px;
+  left: 4px;
+  font-size: 12px;
+  color: #000;
+  transition: all 0.2s ease;
+}
+
+.InputName {
+  border: none;
+  outline: none;
+  background-color: #f6f7f8;
+  padding: 16px;
+  border-bottom: 2px solid #eeeeee;
+  border-radius: 8px;
+}

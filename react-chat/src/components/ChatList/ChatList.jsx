@@ -1,17 +1,9 @@
-import { memo, useEffect, useState } from "react";
-
 import { ChatListElement } from "../ChatListElement/ChatListElement";
-import { loadPeople } from "../../api/people";
 import { getLastMessage } from "../../api/chats";
+import { usePeople } from "../../hooks/usePeople";
 
-export const ChatList = memo(({ onChatSelect }) => {
-  const [people, setPeople] = useState([]);
-
-  useEffect(() => {
-    const getPeople = loadPeople();
-
-    setPeople(getPeople);
-  }, []);
+export const ChatList = () => {
+  const people = usePeople();
 
   const chatsWithLastMessage = people.map((person) => {
     const lastMessage = getLastMessage(person.id);
@@ -24,12 +16,8 @@ export const ChatList = memo(({ onChatSelect }) => {
   return (
     <ul>
       {chatsWithLastMessage.map((chat) => (
-        <ChatListElement
-          key={chat.person.id}
-          chat={chat}
-          onChatSelect={() => onChatSelect(chat.person.id)}
-        />
+        <ChatListElement key={chat.person.id} chat={chat} />
       ))}
     </ul>
   );
-});
+};

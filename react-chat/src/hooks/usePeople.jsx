@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { loadPeople } from "../api/people";
 
 export const usePeople = () => {
