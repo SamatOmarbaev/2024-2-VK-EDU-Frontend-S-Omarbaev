@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { FormFooter } from "../FormFooter/FormFooter";
 import { ChatMessageElement } from "../ChatMessageElement/ChatMessageElement";
-import { createMessageObject, getChatData, saveMessage } from "../../api/chats";
+import { createMessageObject, saveMessage } from "../../api/chats";
 import styles from "./ChatWindow.module.scss";
+import { getMessages } from "../../apiService/messages/messages";
 
 const addNewMessage = ({ text, status, id, setMessages }) => {
   const message = createMessageObject(text, status);
@@ -15,24 +16,8 @@ export const ChatWindow = ({ chatId }) => {
   const [messageText, setMessageText] = useState("");
 
   useEffect(() => {
-    const chatData = getChatData();
-    const chat = chatData[chatId];
-
-    if (chat && chat.messages) {
-      setMessages(chat.messages);
-    }
-
-    const simulateReceivedMessageSent = setTimeout(() => {
-      const text = "Привет) как дела?";
-      addNewMessage({
-        text,
-        status: "received",
-        id: chatId,
-        setMessages,
-      });
-    }, 5000);
-
-    return () => clearTimeout(simulateReceivedMessageSent);
+    const loadedMessages = getMessages(chatId);
+    setMessages(loadedMessages);
   }, [chatId]);
 
   const sendMessage = () => {

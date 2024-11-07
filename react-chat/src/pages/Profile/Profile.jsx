@@ -1,29 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Header } from "../../components/Header/Header";
 import { Button } from "../../components/Button/Button";
-import { usePeople } from "../../hooks/usePeople";
 import { ROUTES } from "../../constants/constants";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import CheckIcon from "@mui/icons-material/Check";
 import avatar from "../../assets/avatar.svg";
 import styles from "./Profile.module.scss";
+import { getUser } from "../../apiService/users/users";
+import EditInput from "../../components/EditInput/EditInput";
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const { chatId } = useParams();
-  const people = usePeople();
-  const person = people.find((p) => p.id === chatId);
-  const [valueName, setValueName] = useState(person?.name);
-  const [valueBio, setValueBio] = useState("");
+  const { userId } = useParams();
+  // const [isEditing, setIsEditing] = useState(false);
+  const [user, setUser] = useState(null);
+  const [editingUser, setEditingUser] = useState({
+    name: "Пользователь",
+    username: "username",
+    description: "Напишите немного о себе",
+    avatar: avatar,
+  });
+
+  const makeChangeHandle = (feildParam) => (value) =>
+    handleChange(feildParam, value);
+
+  useEffect(() => {
+    const savedUser = getUser(userId);
+    if (savedUser) {
+      setUser(savedUser);
+      setEditingUser(savedUser);
+    }
+  }, [userId]);
+
+  /*const handleEdit = () => {
+    if (isEditing) {
+      setUser(editingUser);
+      saveUser(userId, editingUser);
+    }
+    setIsEditing(!isEditing);
+  };*/
+
+  const handleChange = (field, value) => {
+    setEditingUser((prev) => ({ ...prev, [field]: value }));
+  };
 
   const goBack = () => {
     navigate(ROUTES.CHATS);
   };
 
-  const handleChangeName = (e) => setValueName(e.target.value);
-
-  const handleChangeBio = (e) => setValueBio(e.target.value);
+  const userPic = user?.avatar || avatar;
 
   return (
     <>
@@ -38,34 +64,25 @@ export const Profile = () => {
       </Header>
       <div className={styles.ProfileContent}>
         <img
-          src={avatar}
-          alt={`${person?.name}'s photo`}
+          src={userPic}
+          alt={`${userPic}'s photo`}
           className={styles.ProfileImgContainer}
         />
-        <div className={styles.InputContainer}>
-          <label className={valueName ? styles.LabelActive : styles.Label}>
-            Full name
-          </label>
-          <input
-            type="text"
-            value={valueName}
-            onChange={handleChangeName}
-            className={styles.InputName}
-            required
-          />
-        </div>
-        <div className={styles.InputContainer}>
-          <label className={valueBio ? styles.LabelActive : styles.Label}>
-            Bio
-          </label>
-          <textarea
-            type="text"
-            value={valueBio}
-            onChange={handleChangeBio}
-            className={styles.InputName}
-            required
-          />
-        </div>
+        <EditInput
+          labelName="Full name"
+          value={editingUser?.name}
+          onChange={makeChangeHandle("name")}
+        />
+        <EditInput
+          labelName="Username"
+          value={`@${editingUser.username ?? ""}`}
+          onChange={makeChangeHandle("username")}
+        />
+        <EditInput
+          labelName="Bio"
+          value={editingUser?.description}
+          onChange={makeChangeHandle("description")}
+        />
       </div>
     </>
   );
